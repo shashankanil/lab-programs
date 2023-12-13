@@ -1,0 +1,31 @@
+create table student123(usn number(10) primary key, name varchar2(20),dob date,branch varchar2(20),mark1 number(10),mark2 number(10),mark3 number(10),total number(10),gpa number(10));
+39
+
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(101,'aravind','26/jan/2003','bca','90','85','99');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(102,'bhuvan','26/mar/2002','mca','5','78','89');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(103,'shankar','24/feb/2000','mba','90','91','93');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(104,'sachin','12/sep/2000','ma','96','94','97');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(105,'utkarsh','12/sep/2003','mcom','96','95','92');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(106,'yash','23/may/1990','mcom','90','93','89');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(107,'surya','11/nov/1990','msc','76','99','89');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(108,'amar','11/nov/2012','msc','96','79','90');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(109,'oscar','28/jun/2001','mcom','76','89','72');
+insert into student123(usn,name,dob,branch,mark1,mark2,mark3)values(1001,'bear','2/sep/2005','msc','86','89','72');
+
+delete from student123 where usn='103';
+commit
+delete from student123 where usn='102';
+rollback;
+
+select sum(gpa)as "total_gpa" from student123;
+select * from student123 where dob> '26-jan-2000' order by dob asc;
+select usn,name,branch,dob from student123 where dob like '%-%-90';
+select * from student123 where branch='mca';
+select max(gpa) from student123 where branch='mca';
+select branch,max(gpa) from student123 group by branch;
+select * from student123 where name like 's%';
+select sum (mark1),sum(mark2),sum(mark3) from student123;
+select * from student123 where name like '%ar';
+delete student123 where usn='1001';
+
+select * from student123;
