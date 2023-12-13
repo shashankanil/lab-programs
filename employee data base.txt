@@ -1,0 +1,105 @@
+//employee data base
+create table  employee(fname varchar(15) not null,minit char(1),lname varchar(15) not null,ssn varchar(10) primary key,bdate date,address varchar(60),sex char(1),salary number(10,2),super_ssn varchar(10),dno number(10) not null);
+
+
+//insert 
+Insert into employee values('chethan', 'k', 'r', 101, '12-sep-2013', 'banglore', 'f', 15000.30,1001,1);
+Insert into employee values('manju', 'h', 'p', 102, '1-aug-2011', 'pune', 'm', 25000.30,1002,2);
+
+//tablel dept
+create table department (dname varchar(25) not null,dnumber number(10) primary key,mgrssn varchar(10) not null,mgrstartdate date,foreign key(mgrssn) references employee(ssn));
+
+insert into department values('sales','121','101','10-jun-2000');
+insert into department values('account','122','102','09-jan-2001');
+
+
+//dept locations
+
+create table dept_locations(dnumber number(10) not null,dlocation varchar(25) not null,foreign key(dnumber) references department(dnumber));
+
+insert into dept_locations values('121','banglore');
+insert into dept_locations values('122','chennai');
+
+//project
+
+create table project(pname varchar(15) not null,pnumber number(10) primary key,plocation varchar(15),dnum number(10),foreign key(dnum) references department(dnumber));
+
+insert into project values('py','217','chitradurga','121');
+insert into project values('tour','218','kerala','122');
+
+
+//works on 
+
+create table works_on(essn varchar(10) not null, pno number(10) not null,hours number(3,1), foreign key(essn) references employee(ssn), foreign key(pno) references project(pnumber));
+
+insert into works_on values(101,217,20);
+insert into works_on values(102,218,30);
+
+//dependent
+create table dependent(essn varchar(10), dependentname varchar(35),sex char(1), bdate date,relationship varchar(25),foreign key(essn) references employee(ssn));
+
+insert into dependent values(101,'yathi','f','14-sep-2000','sister');
+insert into dependent values(102,'dathri','f','15-aug-2001','friends');
+
+
+//updation 
+update employee set salary=45000 where ssn='102';
+update employee set salary=80000 where ssn='101';
+update employee set fname='kevin',address='boston' where super_ssn='1002';
+
+//delete
+
+delete from emplolyee where ssn='102';
+
+//alter
+alter table dept_locations modify dlocation varchar(35);
+
+
+//group by
+
+select dno,count(*),avg(salary) from employee group by dno;
+
+select dname,count(*) from department d, employee e where e.ssn=d.mgrssn and salary>10000 group by dname having count(*)>1;
+
+//sum
+select sum(salary),max(salary),min(salary),avg(salary) from employee;
+
+//sum of salaries of all the employee of account dept
+
+select max(e.salary), min(e.salary), sum(e.salary), avg(e.salary) from employee e, department d where e.dno=d.dnumber and d.dname='account';
+
+//increment by 10%
+select e.ssn, e.fname, d.dname, 1.1 * e.salary as "INC_SALARY" from employee e,department d where e.dno=d.dnumber and d.dname='sales';
+
+
+//retrive the name of the employee controlled by dept using exists operator
+
+select e.fname from employee where exist(select d.dnumber from department d where e.dno = d.dnumber and e.dno=1;
+
+//each dept with atlest 2 employee
+
+select dname,count(*) from department d, employee e where e.ssn=d.mgrssn and salary>40000 group by dname having count(*)>=2;
+
+//number of employee work on that project
+
+select p.pnumber, p.name,count(*) as "noo of employees" from project on w where p.pnumber=w.pno group by p.pnumber,p.pname;
+
+
+//name of the employee born in 1990
+select fname from employee where bdate like '%-%-11';
+
+//salary more than 40000 on each dept
+
+select dname,count(*) from department d, employee e where e.ssn=d.mgrssn and salary>40000 group by dname having count(*)>=2;
+
+//more than two employee who work on the project 
+
+select pnumber,pname,count(*) from project p,works_on w where w.pno=p.pnumber group by pnumber,pname having count(*)>1;
+
+//view creating 
+
+create view works_on_view as select fname, lname, pname, hours, from employee, project, works_on where ssn=essn & pno=pnumber
+
+select * from works_on_view;
+
+ 
