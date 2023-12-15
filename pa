@@ -1,0 +1,243 @@
+prg 2
+
+echo " The files in the current dir are :"
+
+echo " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
+
+ ls -l 
+
+echo -e "\n\n Files having all permission [ r/w/x] " 
+
+echo -e "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n" 
+
+for file in * 
+
+do 
+
+ if [ -f $file ] 
+
+ then 
+
+ if [ -r $file -a -w $file -a -x $file ] 
+
+ then 
+
+ ls -l $file 
+
+ fi 
+
+ fi 
+
+done
+
+
+
+prg3
+
+echo "Enter the list of file names" 
+
+read fn
+
+set $fn 
+
+if [ $# -lt 2 ] 
+
+then 
+
+ echo "Program needs atleast 2 filenames" 
+
+ exit; 
+
+fi 
+
+for str in ` cat $1 | tr ‘ ‘ ‘\n’ |sort | uniq` 
+
+do 
+
+ echo -e "Words to be searched is $str" 
+
+ echo -e "~~~~~~~~~~~~~~~~~~~~~~~~" 
+
+ echo -e "The number of occurrence in" 
+
+ grep -c "$str" $* 
+
+ done
+
+
+
+prg4
+
+echo echo "Enter the list of file names"
+
+read fn 
+
+set $fn i
+
+f [ $# -lt 1 ] 
+
+then 
+
+ echo "Program needs atleast 1 filename" 
+
+ exit; 
+
+fi 
+
+for i in $@ 
+
+do 
+
+ echo -e "\n \n After converting to uppercase file $i" 
+
+ echo -e "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+
+ tr 'a-z' 'A-Z' < $i 
+
+done
+
+
+
+prg5
+
+echo "Enter a filename" 
+
+read f 
+
+echo -e "\n The content of the file is : " 
+
+cat $f 
+
+ echo 
+
+echo "The lines that has exactly 2 characters"
+
+ echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+
+echo -e "`grep "^.\{2\}$" $f`" 
+
+echo -e "\nThe lines that has more than 2 spaces" 
+
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" 
+
+echo -e "`grep "[[:space:]]\{2,\}" $f`" 
+
+
+
+prg6
+
+echo "enter the first file name" 
+
+read file1 
+
+echo "enter the second file name" 
+
+read file2 
+
+if [ -e $file1 -a -e $file2 -a ! -d $file1 -a ! -d $file2 ] 
+
+then 
+
+ cmp -s -- $file1 $file2 && rm $file2 
+
+ if [ ! -e $file2 ] 
+
+ then 
+
+ echo " the two files contents are same. so $file2 is deleted" 
+
+ else 
+
+ echo " the two file contents are not same and $file2 not deleted" 
+
+ fi 
+
+else 
+
+ echo "Input should be a regular file" 
+
+fi
+
+
+
+prg7a
+
+echo Enter File1
+
+read f1
+
+if [ -f $f1 ]
+
+then
+
+echo "The number of lines in a file that does not contain vowels are:"
+
+grep -v -i '[aeiou]' $f1 | wc -l
+
+else
+
+echo "File does not exist"
+
+fi
+
+
+prg7b
+echo Enter the file name:
+read file
+ if [ -f $file ]
+then
+c=`cat $file | wc -c`
+c=`expr $c - 1`
+w=`cat $file | wc -w`
+l=`cat $file | wc -l`
+echo Number of characters are: $c
+echo Number of words are: $w
+echo Number of Lines are: $l
+else
+echo file does not exist
+fi
+
+prg8
+echo Enter directory name
+read dir
+if [ -d $dir ]
+then
+echo List of files in the directory are:
+ls -l $dir | grep '^-'
+else
+echo Enter proper directory name
+fi
+
+prg9
+echo Your username: $(echo $USER)
+echo current date and time: $(date)
+echo checking logged in Users with who command:
+$whoami
+echo checking logged in users with w command:
+w
+echo checking logged in users with id command:
+$id --u
+echo checking logged in users with users command
+$users
+echo checking logged in users with finger command
+$finger
+
+prg10
+echo Enter File1
+read f1
+echo Enter File2
+read f2
+echo Enter File3
+read f3
+exec 3> f5
+cat $f1 $f2 $f3 >&3
+echo The Merged File is:
+cat f5
+exec 3<&-
+
+
+
+
+ 
+
+
